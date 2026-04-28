@@ -1,11 +1,11 @@
 import { View, Text, Pressable } from 'react-native'
-import { Feather, FontAwesome } from '@expo/vector-icons'
+import { Menu, CircleUserRound } from 'lucide-react-native'
 
 export function Header() {
   return (
     <View className="w-full flex-row justify-between items-center px-6 pb-4 pt-1">
       <Pressable>
-        <Feather name="menu" size={24} color="black" />
+        <Menu size={24} color="black" />
       </Pressable>
 
       <Text className="text-xl font-bold tracking-tighter font-inter-black">
@@ -13,7 +13,7 @@ export function Header() {
       </Text>
 
       <View>
-        <FontAwesome name="user-circle" size={24} color="black" />
+        <CircleUserRound size={24} color="black" />
       </View>
     </View>
   )

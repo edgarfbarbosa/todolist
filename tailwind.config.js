@@ -6,6 +6,8 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ['Inter_400Regular'],
+        'inter-bold': ['Inter_700Bold'],
+        'inter-extra-bold': ['Inter_800ExtraBold'],
         'inter-black': ['Inter_900Black'],
       },
       colors: {
