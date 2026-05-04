@@ -24,7 +24,9 @@ export default function Layout() {
 
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+      </Stack>
       <StatusBar style="auto" />
     </>
   )

@@ -1,13 +1,13 @@
 import { Header } from '../components/Header'
 import { DayOverview } from '../components/DayOverview'
-import { HabitList } from '@/components/HabitList'
+import { TaskList } from '@/components/TaskList'
 
-export function DashboardScreen() {
+export function TasksScreen() {
   return (
     <>
       <Header />
       <DayOverview />
-      <HabitList />
+      <TaskList />
     </>
   )
 }

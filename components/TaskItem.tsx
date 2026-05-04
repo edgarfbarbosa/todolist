@@ -1,15 +1,15 @@
 import { View, Text, Pressable } from 'react-native'
 import { Circle, CircleCheck } from 'lucide-react-native'
-import useHabitStore from '../stores/useHabitStore'
-import { Habit } from '../types/habit'
+import useTaskStore from '../stores/useTaskStore'
+import { Task } from '../types/task'
 
-export function HabitItem({ id, name, completed, time }: Habit) {
-  const toggleHabitCompleted = useHabitStore((state) => {
-    return state.toggleHabitCompleted
-  })
+export function TaskItem({ id, name, completed, time }: Task) {
+  const toggleTaskCompleted = useTaskStore(
+    (state) => state.toggleTaskCompleted,
+  )
 
   function handleCheckboxPress() {
-    toggleHabitCompleted(id)
+    toggleTaskCompleted(id)
   }
 
   return (
