@@ -4,6 +4,7 @@ import { Task } from '../types/task'
 interface TaskStore {
   tasks: Task[]
   toggleTaskCompleted: (id: string) => void
+  createTask: (task: Task) => void
 }
 
 const taskStore: StateCreator<TaskStore> = (set) => ({
@@ -20,6 +21,9 @@ const taskStore: StateCreator<TaskStore> = (set) => ({
       completed: false,
     },
   ],
+
+  createTask: (task: Task) =>
+    set((state) => ({ tasks: [...state.tasks, task] })),
 
   toggleTaskCompleted: (id: string) =>
     set((state) => ({
