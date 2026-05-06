@@ -1,0 +1,108 @@
+import { useState } from 'react'
+import { Pressable, View, Text, TextInput } from 'react-native'
+import { Plus, ArrowUp, ArrowDown } from 'lucide-react-native'
+import useTaskStore from '../stores/useTaskStore'
+
+export function TaskQuickAdd() {
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [taskName, setTaskName] = useState('')
+  const [pomodoroCount, setPomodoroCount] = useState(1)
+  const createTask = useTaskStore((state) => state.createTask)
+
+  function handlePressToOpenForm() {
+    setIsFormOpen(true)
+  }
+
+  function handleIncreasePomodoroCount() {
+    setPomodoroCount((prev) => prev + 1)
+  }
+
+  function handleDecreasePomodoroCount() {
+    setPomodoroCount((prev) => Math.max(1, prev - 1))
+  }
+
+  function handleAddTask() {
+    if (!taskName.trim()) return
+
+    createTask({
+      id: String(Date.now()),
+      name: taskName,
+      completed: false,
+    })
+  }
+
+  function handleCancelAddTask() {
+    setTaskName('')
+    setPomodoroCount(1)
+    setIsFormOpen(false)
+  }
+
+  return (
+    <View className="px-4 mb-4">
+      {!isFormOpen ? (
+        <Pressable
+          onPress={handlePressToOpenForm}
+          className="items-center justify-center h-36 w-full rounded-xl bg-white border-dashed border-2 border-secondary p-6"
+        >
+          <View className="items-center">
+            <Plus size={32} color="#777777" />
+            <Text className="text-base font-inter-bold text-secondary uppercase -tracking-wide">
+              Adicionar tarefa
+            </Text>
+          </View>
+        </Pressable>
+      ) : (
+        <View className="w-full bg-white border-solid border-2 border-black p-6">
+          <View>
+            <Text className="text-xs font-inter-extra-bold text-primary uppercase -tracking-tight mb-2">
+              Nova tarefa
+            </Text>
+            <TextInput
+              placeholder="NOME DA TAREFA"
+              className="text-2xl font-inter-bold border-b border-solid border-secondary py-3 focus:outline-none"
+              value={taskName}
+              onChangeText={setTaskName}
+            />
+          </View>
+          <View>
+            <Text className="text-xs font-inter-bold text-primary uppercase my-3">
+              Pomodoros estimados
+            </Text>
+            <View className="flex-row items-center gap-2 mb-2">
+              <Text className="text-5xl font-inter-black text-black">
+                {pomodoroCount}
+              </Text>
+              <Pressable
+                onPress={handleIncreasePomodoroCount}
+                className="w-10 h-10 border border-secondary items-center justify-center"
+              >
+                <ArrowUp />
+              </Pressable>
+              <Pressable
+                onPress={handleDecreasePomodoroCount}
+                className="w-10 h-10 border border-secondary items-center justify-center"
+              >
+                <ArrowDown />
+              </Pressable>
+            </View>
+          </View>
+          <View className="flex-row">
+            <Pressable>
+              <Text
+                onPress={handleAddTask}
+                className="bg-black text-white font-inter-bold uppercase px-8 py-4"
+              >
+                Adicionar
+              </Text>
+            </Pressable>
+            <Pressable onPress={handleCancelAddTask}>
+              <Text className="bg-transparent text-black font-inter-bold uppercase underline px-8 py-4">
+                Cancelar
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      )}
+    </View>
+  )
+}

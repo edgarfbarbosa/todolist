@@ -1,6 +1,7 @@
 import { Header } from '../components/Header'
 import { DayOverview } from '../components/DayOverview'
-import { TaskList } from '@/components/TaskList'
+import { TaskList } from '../components/TaskList'
+import { TaskQuickAdd } from '../components/TaskQuickAdd'
 
 export function TasksScreen() {
   return (
@@ -8,6 +9,7 @@ export function TasksScreen() {
       <Header />
       <DayOverview />
       <TaskList />
+      <TaskQuickAdd />
     </>
   )
 }
