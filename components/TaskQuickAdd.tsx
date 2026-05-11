@@ -6,19 +6,19 @@ import useTaskStore from '../stores/useTaskStore'
 export function TaskQuickAdd() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [taskName, setTaskName] = useState('')
-  const [pomodoroCount, setPomodoroCount] = useState(1)
+  const [pomodoroAmount, setPomodoroAmount] = useState(1)
   const createTask = useTaskStore((state) => state.createTask)
 
   function handlePressToOpenForm() {
     setIsFormOpen(true)
   }
 
-  function handleIncreasePomodoroCount() {
-    setPomodoroCount((prev) => prev + 1)
+  function handleIncreasePomodoroAmount() {
+    setPomodoroAmount((prev) => prev + 1)
   }
 
-  function handleDecreasePomodoroCount() {
-    setPomodoroCount((prev) => Math.max(1, prev - 1))
+  function handleDecreasePomodoroAmount() {
+    setPomodoroAmount((prev) => Math.max(1, prev - 1))
   }
 
   function handleAddTask() {
@@ -28,12 +28,13 @@ export function TaskQuickAdd() {
       id: String(Date.now()),
       name: taskName,
       completed: false,
+      pomodoros: pomodoroAmount,
     })
   }
 
   function handleCancelAddTask() {
     setTaskName('')
-    setPomodoroCount(1)
+    setPomodoroAmount(1)
     setIsFormOpen(false)
   }
 
@@ -70,16 +71,16 @@ export function TaskQuickAdd() {
             </Text>
             <View className="flex-row items-center gap-2 mb-2">
               <Text className="text-5xl font-inter-black text-black">
-                {pomodoroCount}
+                {pomodoroAmount}
               </Text>
               <Pressable
-                onPress={handleIncreasePomodoroCount}
+                onPress={handleIncreasePomodoroAmount}
                 className="w-10 h-10 border border-secondary items-center justify-center"
               >
                 <ArrowUp />
               </Pressable>
               <Pressable
-                onPress={handleDecreasePomodoroCount}
+                onPress={handleDecreasePomodoroAmount}
                 className="w-10 h-10 border border-secondary items-center justify-center"
               >
                 <ArrowDown />

@@ -14,6 +14,7 @@ export function TaskList() {
           name={task.name}
           completed={task.completed}
           time={task.time}
+          pomodoros={task.pomodoros}
         />
       ))}
     </View>
