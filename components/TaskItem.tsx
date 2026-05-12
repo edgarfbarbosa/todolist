@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, TextInput } from 'react-native'
 import {
   Circle,
   CircleCheck,
@@ -12,12 +12,15 @@ import { Task } from '../types/task'
 
 export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
   const [isEditing, setIsEditing] = useState(false)
+  const [newTaskName, setNewTaskName] = useState(name)
 
   const toggleTaskCompleted = useTaskStore(
     (state) => state.toggleTaskCompleted,
   )
 
   const deleteTask = useTaskStore((state) => state.deleteTask)
+
+  const updateTaskName = useTaskStore((state) => state.updateTaskName)
 
   function handleCheckboxPress() {
     toggleTaskCompleted(id)
@@ -29,6 +32,14 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
 
   function handleDeleteButtonPress() {
     deleteTask(id)
+  }
+
+  function handleSaveButtonPress() {
+    if (!newTaskName.trim()) return
+
+    updateTaskName(id, newTaskName)
+
+    setIsEditing(false)
   }
 
   return (
@@ -78,18 +89,31 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
       </View>
 
       {isEditing ? (
-        <View className="flex-row items-center">
-          <Pressable onPress={handleDeleteButtonPress}>
-            <Trash2 size={24} color="#777777" />
-          </Pressable>
+        <View className="flex-col">
+          <View className="mb-5">
+            <TextInput
+              value={newTaskName}
+              onChangeText={setNewTaskName}
+              className="text-2xl font-inter-bold border-b border-solid border-secondary py-3 focus:outline-none"
+            />
+          </View>
 
-          <View className="flex-row gap-4">
-            <Pressable className="h-12 w-32 font-inter-bold items-center justify-center text-secondary bg-transparent rounded-lg text-sm uppercase">
-              Cancel
+          <View className="flex-row items-center">
+            <Pressable onPress={handleDeleteButtonPress}>
+              <Trash2 size={24} color="#777777" />
             </Pressable>
-            <Pressable className="h-12 w-32 font-inter-bold items-center justify-center text-white bg-black rounded-lg text-sm uppercase">
-              Save
-            </Pressable>
+
+            <View className="flex-row gap-4">
+              <Pressable className="h-12 w-32 font-inter-bold items-center justify-center text-secondary bg-transparent rounded-lg text-sm uppercase">
+                Cancel
+              </Pressable>
+              <Pressable
+                onPress={handleSaveButtonPress}
+                className="h-12 w-32 font-inter-bold items-center justify-center text-white bg-black rounded-lg text-sm uppercase"
+              >
+                Save
+              </Pressable>
+            </View>
           </View>
         </View>
       ) : null}

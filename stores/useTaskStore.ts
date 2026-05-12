@@ -6,6 +6,7 @@ interface TaskStore {
   toggleTaskCompleted: (id: string) => void
   createTask: (task: Task) => void
   deleteTask: (id: string) => void
+  updateTaskName: (id: string, name: string) => void
 }
 
 const taskStore: StateCreator<TaskStore> = (set) => ({
@@ -21,6 +22,13 @@ const taskStore: StateCreator<TaskStore> = (set) => ({
 
   createTask: (task: Task) =>
     set((state) => ({ tasks: [...state.tasks, task] })),
+
+  updateTaskName: (id: string, name: string) =>
+    set((state) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === id ? { ...task, name } : task,
+      ),
+    })),
 
   deleteTask: (id: string) =>
     set((state) => ({
