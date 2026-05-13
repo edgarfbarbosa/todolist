@@ -6,6 +6,8 @@ import {
   Clock,
   EllipsisVertical,
   Trash2,
+  ArrowUp,
+  ArrowDown,
 } from 'lucide-react-native'
 import useTaskStore from '../stores/useTaskStore'
 import { Task } from '../types/task'
@@ -13,6 +15,7 @@ import { Task } from '../types/task'
 export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
   const [isEditing, setIsEditing] = useState(false)
   const [newTaskName, setNewTaskName] = useState(name)
+  const [newPomodoroAmount, setNewPomodoroAmount] = useState(pomodoros)
 
   const toggleTaskCompleted = useTaskStore(
     (state) => state.toggleTaskCompleted,
@@ -21,6 +24,10 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
   const deleteTask = useTaskStore((state) => state.deleteTask)
 
   const updateTaskName = useTaskStore((state) => state.updateTaskName)
+
+  const updateTaskPomodoros = useTaskStore(
+    (state) => state.updateTaskPomodoros,
+  )
 
   function handleCheckboxPress() {
     toggleTaskCompleted(id)
@@ -38,8 +45,23 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
     if (!newTaskName.trim()) return
 
     updateTaskName(id, newTaskName)
+    updateTaskPomodoros(id, newPomodoroAmount)
 
     setIsEditing(false)
+  }
+
+  function handleCancelButtonPress() {
+    setNewTaskName(name)
+    setNewPomodoroAmount(pomodoros)
+    setIsEditing(false)
+  }
+
+  function handleIncreaseNewPomodoroAmount() {
+    setNewPomodoroAmount((prev) => prev + 1)
+  }
+
+  function handleDecreaseNewPomodoroAmount() {
+    setNewPomodoroAmount((prev) => Math.max(1, prev - 1))
   }
 
   return (
@@ -98,13 +120,49 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
             />
           </View>
 
+          <View className="flex-col gap-2">
+            <Text className="font-inter-extra-bold text-sm uppercase text-secondary">
+              Act / Pomodoros Estimados
+            </Text>
+            <View>
+              <View className="flex-row gap-4 items-center">
+                <Text className="font-inter-bold text-secondary text-2xl">
+                  0
+                </Text>
+                <Text className="font-inter-bold text-secondary text-2xl">
+                  /
+                </Text>
+                <Text className="font-inter-bold text-secondary text-2xl">
+                  {newPomodoroAmount}
+                </Text>
+                <View className="flex-col gap-2">
+                  <Pressable
+                    onPress={handleIncreaseNewPomodoroAmount}
+                    className="w-10 h-10 border border-secondary items-center justify-center"
+                  >
+                    <ArrowUp />
+                  </Pressable>
+                  <Pressable
+                    onPress={handleDecreaseNewPomodoroAmount}
+                    className="w-10 h-10 border border-secondary items-center justify-center"
+                  >
+                    <ArrowDown />
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </View>
+
           <View className="flex-row items-center">
             <Pressable onPress={handleDeleteButtonPress}>
               <Trash2 size={24} color="#777777" />
             </Pressable>
 
             <View className="flex-row gap-4">
-              <Pressable className="h-12 w-32 font-inter-bold items-center justify-center text-secondary bg-transparent rounded-lg text-sm uppercase">
+              <Pressable
+                onPress={handleCancelButtonPress}
+                className="h-12 w-32 font-inter-bold items-center justify-center text-secondary bg-transparent rounded-lg text-sm uppercase"
+              >
                 Cancel
               </Pressable>
               <Pressable

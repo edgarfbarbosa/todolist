@@ -7,6 +7,7 @@ interface TaskStore {
   createTask: (task: Task) => void
   deleteTask: (id: string) => void
   updateTaskName: (id: string, name: string) => void
+  updateTaskPomodoros: (id: string, pomodoros: number) => void
 }
 
 const taskStore: StateCreator<TaskStore> = (set) => ({
@@ -27,6 +28,13 @@ const taskStore: StateCreator<TaskStore> = (set) => ({
     set((state) => ({
       tasks: state.tasks.map((task) =>
         task.id === id ? { ...task, name } : task,
+      ),
+    })),
+
+  updateTaskPomodoros: (id: string, pomodoros: number) =>
+    set((state) => ({
+      tasks: state.tasks.map((task) =>
+        task.id === id ? { ...task, pomodoros } : task,
       ),
     })),
 
