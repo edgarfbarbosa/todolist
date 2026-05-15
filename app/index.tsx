@@ -1,6 +1,6 @@
-import { Redirect } from 'expo-router'
 import '../assets/css/global.css'
+import { MainScreen } from '../screens/MainScreen'
 
 export default function Home() {
-  return <Redirect href="/(tabs)/tasks" />
+  return <MainScreen />
 }
