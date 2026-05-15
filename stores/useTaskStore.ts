@@ -17,7 +17,6 @@ const taskStore: StateCreator<TaskStore> = (set) => ({
       name: 'Desenvolver meu projeto',
       completed: false,
       pomodoros: 3,
-      time: '18:00 PM',
     },
   ],
 

@@ -3,5 +3,4 @@ export type Task = {
   name: string
   completed: boolean
   pomodoros: number
-  time?: string
 }

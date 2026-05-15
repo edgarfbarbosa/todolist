@@ -43,11 +43,11 @@ export function TaskQuickAdd() {
       {!isFormOpen ? (
         <Pressable
           onPress={handlePressToOpenForm}
-          className="items-center justify-center h-36 w-full rounded-xl bg-white border-dashed border-2 border-secondary p-6"
+          className="items-center justify-center h-36 w-full rounded-xl bg-white border-dashed border-2 border-tertiary p-6"
         >
           <View className="items-center">
             <Plus size={32} color="#777777" />
-            <Text className="text-base font-inter-bold text-secondary uppercase -tracking-wide">
+            <Text className="text-base font-inter-bold text-tertiary uppercase -tracking-wide">
               Adicionar tarefa
             </Text>
           </View>
@@ -60,7 +60,7 @@ export function TaskQuickAdd() {
             </Text>
             <TextInput
               placeholder="NOME DA TAREFA"
-              className="text-2xl font-inter-bold border-b border-solid border-secondary py-3 focus:outline-none"
+              className="text-2xl font-inter-bold border-b border-solid border-tertiary py-3 focus:outline-none"
               value={taskName}
               onChangeText={setTaskName}
             />
@@ -75,13 +75,13 @@ export function TaskQuickAdd() {
               </Text>
               <Pressable
                 onPress={handleIncreasePomodoroAmount}
-                className="w-10 h-10 border border-secondary items-center justify-center"
+                className="w-10 h-10 border border-tertiary items-center justify-center"
               >
                 <ArrowUp />
               </Pressable>
               <Pressable
                 onPress={handleDecreasePomodoroAmount}
-                className="w-10 h-10 border border-secondary items-center justify-center"
+                className="w-10 h-10 border border-tertiary items-center justify-center"
               >
                 <ArrowDown />
               </Pressable>

@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { View, Text, Pressable, TextInput } from 'react-native'
 import {
-  Circle,
-  CircleCheck,
-  Clock,
   EllipsisVertical,
   Trash2,
   ArrowUp,
@@ -12,14 +9,10 @@ import {
 import useTaskStore from '../stores/useTaskStore'
 import { Task } from '../types/task'
 
-export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
+export function TaskItem({ id, name, completed, pomodoros }: Task) {
   const [isEditing, setIsEditing] = useState(false)
   const [newTaskName, setNewTaskName] = useState(name)
   const [newPomodoroAmount, setNewPomodoroAmount] = useState(pomodoros)
-
-  const toggleTaskCompleted = useTaskStore(
-    (state) => state.toggleTaskCompleted,
-  )
 
   const deleteTask = useTaskStore((state) => state.deleteTask)
 
@@ -28,10 +21,6 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
   const updateTaskPomodoros = useTaskStore(
     (state) => state.updateTaskPomodoros,
   )
-
-  function handleCheckboxPress() {
-    toggleTaskCompleted(id)
-  }
 
   function handleEditingButtonPress() {
     setIsEditing((prev) => !prev)
@@ -65,47 +54,28 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
   }
 
   return (
-    <View className="flex-col p-5 mx-4 mb-4 rounded-xl bg-gray-300">
-      <View className="flex-row items-center justify-between ">
-        <View className="flex-col gap-2">
-          {time ? (
-            <Text className="text-sm font-inter-bold -tracking-wider">
-              {time}
-            </Text>
-          ) : null}
-
+    <View className="flex-col mx-4 mb-4 p-5 rounded-xl bg-surface-2 border-l-4 border-l-primary">
+      <View className="flex-row items-center justify-between">
+        <View className="flex-1 pr-8">
           <Text
-            className={`text-xl font-inter-bold
-            ${completed ? 'line-through text-secondary' : 'text-black'}`}
+            className={`text-xl font-inter-bold -tracking-wide
+            ${completed ? 'line-through text-tertiary' : 'text-black'}`}
+            numberOfLines={1}
+            ellipsizeMode="tail"
           >
             {name}
           </Text>
-
-          <View className="flex-row items-center gap-1">
-            <Clock size={14} color="#777777" />
-            <Text className="text-xs text-secondary font-inter-bold uppercase">
-              {pomodoros} pomodoros
-            </Text>
-          </View>
         </View>
 
-        <View className="flex-row gap-2">
-          <Pressable
-            onPress={handleCheckboxPress}
-            className={`w-16 h-16 items-center justify-center rounded-xl border-solid border-2
-        ${completed ? 'bg-primary border-primary' : 'bg-white border-secondary'}`}
-          >
-            {completed ? (
-              <CircleCheck size={24} color="white" />
-            ) : (
-              <Circle size={24} color="#777777" />
-            )}
-          </Pressable>
+        <View className="flex-row items-center gap-3">
+          <Text className="text-sm text-tertiary font-inter-bold uppercase -tracking-wide">
+            <Text className="text-lg">0</Text> / {pomodoros}
+          </Text>
           <Pressable
             onPress={handleEditingButtonPress}
-            className="w-16 h-16 items-center justify-center rounded-xl border-solid border-2 border-black"
+            className="w-10 h-10 items-center justify-center rounded-lg bg-surface"
           >
-            <EllipsisVertical />
+            <EllipsisVertical size={24} color="#333333" />
           </Pressable>
         </View>
       </View>
@@ -116,35 +86,35 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
             <TextInput
               value={newTaskName}
               onChangeText={setNewTaskName}
-              className="text-2xl font-inter-bold border-b border-solid border-secondary py-3 focus:outline-none"
+              className="text-2xl font-inter-bold border-b border-solid border-tertiary py-3 focus:outline-none"
             />
           </View>
 
           <View className="flex-col gap-2">
-            <Text className="font-inter-extra-bold text-sm uppercase text-secondary">
+            <Text className="font-inter-extra-bold text-sm uppercase text-tertiary">
               Act / Pomodoros Estimados
             </Text>
             <View>
               <View className="flex-row gap-4 items-center">
-                <Text className="font-inter-bold text-secondary text-2xl">
+                <Text className="font-inter-bold text-tertiary text-2xl">
                   0
                 </Text>
-                <Text className="font-inter-bold text-secondary text-2xl">
+                <Text className="font-inter-bold text-tertiary text-2xl">
                   /
                 </Text>
-                <Text className="font-inter-bold text-secondary text-2xl">
+                <Text className="font-inter-bold text-tertiary text-2xl">
                   {newPomodoroAmount}
                 </Text>
                 <View className="flex-col gap-2">
                   <Pressable
                     onPress={handleIncreaseNewPomodoroAmount}
-                    className="w-10 h-10 border border-secondary items-center justify-center"
+                    className="w-10 h-10 border border-tertiary items-center justify-center"
                   >
                     <ArrowUp />
                   </Pressable>
                   <Pressable
                     onPress={handleDecreaseNewPomodoroAmount}
-                    className="w-10 h-10 border border-secondary items-center justify-center"
+                    className="w-10 h-10 border border-tertiary items-center justify-center"
                   >
                     <ArrowDown />
                   </Pressable>
@@ -161,7 +131,7 @@ export function TaskItem({ id, name, completed, time, pomodoros }: Task) {
             <View className="flex-row gap-4">
               <Pressable
                 onPress={handleCancelButtonPress}
-                className="h-12 w-32 font-inter-bold items-center justify-center text-secondary bg-transparent rounded-lg text-sm uppercase"
+                className="h-12 w-32 font-inter-bold items-center justify-center text-tertiary bg-transparent rounded-lg text-sm uppercase"
               >
                 Cancel
               </Pressable>

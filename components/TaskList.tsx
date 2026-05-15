@@ -13,7 +13,6 @@ export function TaskList() {
           id={task.id}
           name={task.name}
           completed={task.completed}
-          time={task.time}
           pomodoros={task.pomodoros}
         />
       ))}
